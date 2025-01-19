@@ -1,6 +1,10 @@
 #include "m_flashrom.h"
 #include "global.h"
 
+#include "sFRm_flashrom.h"
+
+extern s32 D_80106A90_jp;
+extern s32 D_80106A94_jp;
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/code/m_flashrom/func_8008ECA0_jp.s")
 
@@ -10,7 +14,12 @@
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/code/m_flashrom/func_8008ED14_jp.s")
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/code/m_flashrom/func_8008EE24_jp.s")
+void func_8008EE24_jp(void) {
+    sFRm_Init();
+    func_8008FA50_jp();
+    D_80106A90_jp = 0;
+    D_80106A94_jp = 0;
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/code/m_flashrom/func_8008EE5C_jp.s")
 
