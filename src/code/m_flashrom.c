@@ -18,7 +18,11 @@ void func_8008ECC8_jp(s32 arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/code/m_flashrom/func_8008ECF0_jp.s")
+void func_8008ECF0_jp(s32 arg0) {
+    if ((arg0 >= 0) && (arg0 < ARRAY_COUNT(D_80106A9C_jp))) {
+        D_80106A9C_jp[arg0] = 0;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/code/m_flashrom/func_8008ED14_jp.s")
 
