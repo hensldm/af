@@ -62,7 +62,9 @@ void func_8008EE24_jp(void) {
     D_80106A94_jp = 0;
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/code/m_flashrom/func_8008EE5C_jp.s")
+s32 func_8008EE5C_jp(void) {
+    return D_80106A90_jp;
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/code/m_flashrom/func_8008EE6C_jp.s")
 
