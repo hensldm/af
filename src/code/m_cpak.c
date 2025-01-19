@@ -421,7 +421,7 @@ UNK_RET func_80079AAC_jp(void) {
     return ret;
 }
 
-void func_80079B28_jp(UNK_PTR arg0, u32 arg1, PakInfo* info) {
+void func_80079B28_jp(void* arg0, u32 arg1, PakInfo* info) {
     UNUSED s32 pad[2];
     s32 temp_v0 = func_80079EA4_jp(arg0, info);
     OSMesgQueue* queue;
@@ -555,7 +555,7 @@ s32 func_80079F44_jp(void) {
 
     if (sp24 == 1) {
         l_pak_ctrl.unk_1204 = 1;
-        sp2A = func_8008EE7C_jp(&l_pak_ctrl, sizeof(Passport));
+        sp2A = func_8008EE7C_jp((void*)&l_pak_ctrl.passport, sizeof(Passport));
     } else if (sp24 == -1) {
         ret = -2;
     } else {
