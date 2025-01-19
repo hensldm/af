@@ -70,7 +70,18 @@ u8 func_8008EE6C_jp(void) {
     return D_80106A98_jp;
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/code/m_flashrom/func_8008EE7C_jp.s")
+u16 func_8008EE7C_jp(u16* arg0, u32 size) {
+    u16 ret = 0;
+
+    if ((size % 2) == 0) {
+        for (; size > 0; size -= 2) {
+            ret += *arg0;
+            arg0++;
+        }
+    }
+
+    return ret;
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/code/m_flashrom/func_8008EEB4_jp.s")
 
