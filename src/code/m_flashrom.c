@@ -1,6 +1,8 @@
 #include "m_flashrom.h"
 #include "global.h"
 
+#include "libu64/gfxprint.h"
+
 #include "sFRm_flashrom.h"
 
 extern s32 D_80106A90_jp;
@@ -14,17 +16,44 @@ void func_8008ECA0_jp(void) {
 
 void func_8008ECC8_jp(s32 arg0) {
     if ((arg0 >= 0) && (arg0 < ARRAY_COUNT(D_80106A9C_jp))) {
-        D_80106A9C_jp[arg0] = 1;
+        D_80106A9C_jp[arg0] = TRUE;
     }
 }
 
 void func_8008ECF0_jp(s32 arg0) {
     if ((arg0 >= 0) && (arg0 < ARRAY_COUNT(D_80106A9C_jp))) {
-        D_80106A9C_jp[arg0] = 0;
+        D_80106A9C_jp[arg0] = FALSE;
     }
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/code/m_flashrom/func_8008ED14_jp.s")
+void func_8008ED14_jp(gfxprint* printer) {
+    gfxprint_color(printer, 250, 100, 250, 255);
+    gfxprint_locate8x8(printer, 22, 3);
+
+    if (D_80106A9C_jp[0]) {
+        gfxprint_printf(printer, "N");
+    }
+
+    if (D_80106A9C_jp[1]) {
+        gfxprint_printf(printer, "A");
+    }
+
+    if (D_80106A9C_jp[2]) {
+        gfxprint_printf(printer, "W");
+    }
+
+    if (D_80106A9C_jp[3]) {
+        gfxprint_printf(printer, "R");
+    }
+
+    if (D_80106A9C_jp[4]) {
+        gfxprint_printf(printer, "C");
+    }
+
+    if (D_80106A9C_jp[5]) {
+        gfxprint_printf(printer, "O");
+    }
+}
 
 void func_8008EE24_jp(void) {
     sFRm_Init();

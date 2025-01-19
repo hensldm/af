@@ -4,9 +4,10 @@
 #include "ultra64.h"
 #include "unk.h"
 
+struct gfxprint;
 struct CommonData;
 
-// void func_8008ED14_jp();
+void func_8008ED14_jp(struct gfxprint* printer);
 void func_8008EE24_jp(void);
 // void func_8008EE5C_jp();
 // void func_8008EE6C_jp();
