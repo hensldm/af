@@ -39,7 +39,7 @@
       - [0x6A83A0, asm, code/m_field_assessment]
       - [0x6A8B70, asm, code/m_field_make]
       - [0x6AB8D0, c, code/m_field_info]
-      - [0x6B2940, asm, code/m_flashrom]
+      - [0x6B2940, c, code/m_flashrom]
       - [0x6B3DC0, asm, code/6B3DC0]
       - [0x6B6560, asm, code/m_handbill]
       - [0x6B81C0, asm, code/m_home]
@@ -170,6 +170,8 @@
       - [0x729340, data, code/729340]
       - [0x729DD0, .data, code/m_fbdemo_fade]
       - [0x729E40, data, code/729E40]
+      - [0x72A730, data, code/m_flashrom]
+      - [0x72A790, data, code/72A790]
       - [0x72AAC0, .data, code/m_game_dlftbls]
       - [0x72ACB0, data, code/72ACB0]
       - [0x72B400, .data, code/m_kankyo]
@@ -239,7 +241,7 @@
       - [0x73A9E0, rodata, code/73A9E0]
       - [0x73AA10, rodata, code/73AA10]
       - [0x73AAE0, .rodata, code/m_field_info]
-      - [0x73ABB0, rodata, code/73ABB0]
+      - [0x73ABB0, .rodata, code/m_flashrom]
       - [0x73ABD0, rodata, code/73ABD0]
       - [0x73AC50, rodata, code/73AC50]
       - [0x73AC60, rodata, code/73AC60]
@@ -315,6 +317,8 @@
       - { start: 0x73F4D0, type: bss, vram: 0x80138E70, name: code/80138E70 }
       - { start: 0x73F4D0, type: .bss, vram: 0x80139C40, name: code/m_demo}
       - { start: 0x73F4E0, type: bss, vram: 0x80139F70, name: code/80139F70}
+      - { start: 0x73F4E0, type: bss, vram: 0x8013A380, name: code/m_flashrom}
+      - { start: 0x73F4E0, type: bss, vram: 0x8013A3C0, name: code/8013A3C0}
       - { start: 0x73F4D0, type: .bss, vram: 0x80141DE0, name: code/m_kankyo }
       - { start: 0x73F4D0, type: .bss, vram: 0x80141E10, name: code/m_lights }
       - { start: 0x75B600, type: .bss, vram: 0x80141FA0, name: code/m_malloc }
