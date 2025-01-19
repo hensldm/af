@@ -7,7 +7,7 @@
 
 extern s32 D_80106A90_jp;
 extern s32 D_80106A94_jp;
-
+extern u8 D_80106A98_jp;
 extern s32 D_80106A9C_jp[6];
 
 void func_8008ECA0_jp(void) {
@@ -66,7 +66,9 @@ s32 func_8008EE5C_jp(void) {
     return D_80106A90_jp;
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/code/m_flashrom/func_8008EE6C_jp.s")
+u8 func_8008EE6C_jp(void) {
+    return D_80106A98_jp;
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/code/m_flashrom/func_8008EE7C_jp.s")
 
