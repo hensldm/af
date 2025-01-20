@@ -5,6 +5,8 @@
 
 #include "m_common_data.h"
 #include "m_cpak.h"
+#include "m_lib.h"
+#include "m_time.h"
 #include "sFRm_flashrom.h"
 
 extern s32 D_80106A90_jp;
@@ -113,7 +115,12 @@ s32 mFRm_CheckSaveData(void) {
     return func_8008EF0C_jp(&common_data, common_data.save.landInfo.id);
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/code/m_flashrom/mFRm_ClearSaveCheckData.s")
+void mFRm_ClearSaveCheckData(CommonData* common_data) {
+    common_data->save.unk_00004 = -1;
+    common_data->save.unk_00008 = 0xFFFF;
+    mem_copy((void*)&common_data->save.unk_00000A, (void*)&mTM_rtcTime_clear_code, sizeof(lbRTC_time_c));
+    common_data->save.unk_000012 = 0;
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/code/m_flashrom/func_8008EFDC_jp.s")
 
