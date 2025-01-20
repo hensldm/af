@@ -5,16 +5,15 @@
 #include "unk.h"
 
 struct gfxprint;
-struct CommonData;
+struct Save;
 
 void func_8008ED14_jp(struct gfxprint* printer);
 void func_8008EE24_jp(void);
 u16 func_8008EE7C_jp(u16* arg0, u32 size);
 u16 func_8008EEB4_jp(void* arg0, u32 size, u16 arg2);
-// void func_8008EEE8_jp();
-// void func_8008EF0C_jp();
+s32 func_8008EEE8_jp(struct Save* save);
 s32 mFRm_CheckSaveData(void);
-void mFRm_ClearSaveCheckData(struct CommonData* common_data);
+void mFRm_ClearSaveCheckData(struct Save* save);
 // void func_8008EFDC_jp();
 // void func_8008F020_jp();
 // void func_8008F040_jp();

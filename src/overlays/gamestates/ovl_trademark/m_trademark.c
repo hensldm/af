@@ -123,7 +123,7 @@ void trademark_goto_demo_scene(Game_Trademark* this) {
         s32 i;
 
         bzero(&common_data.save, sizeof(Save));
-        mFRm_ClearSaveCheckData(&common_data);
+        mFRm_ClearSaveCheckData(&common_data.save);
 
         privateInfo = &common_data.save.saveFilePrivateInfo[0];
         for (i = 0; i < ARRAY_COUNT(common_data.save.saveFilePrivateInfo); i++) {

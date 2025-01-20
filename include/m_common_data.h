@@ -67,7 +67,9 @@ typedef struct FamicomEmuCommonData {
 } FamicomEmuCommonData; // size >= 0x26
 
 typedef struct Save {
-    /* 0x00000 */ u8 unk_00000[0x14];
+    /* 0x00000 */ u8 unk_00000[0x8];
+    /* 0x00008 */ u16 unk_00008;
+    /* 0x0000A */ u8 unk_00000A[0xA];
     /* 0x00014 */ s32 sceneNo;
     /* 0x00018 */ u8 nowNpcMax;
     /* 0x00019 */ u8 removeAnimalIdx;

@@ -13,7 +13,7 @@ void common_data_reinit(void) {
     common_data.unk_10004 = -1;
     common_data.unk_107B6 = 0xC9;
     common_data.unk_10AB0 = sp1F;
-    mFRm_ClearSaveCheckData(&common_data);
+    mFRm_ClearSaveCheckData(&common_data.save);
 }
 
 void common_data_init(void) {

@@ -3,6 +3,7 @@
 
 #include "libu64/gfxprint.h"
 
+#include "m_common_data.h"
 #include "sFRm_flashrom.h"
 
 extern s32 D_80106A90_jp;
@@ -89,9 +90,20 @@ u16 func_8008EEB4_jp(void* arg0, u32 size, u16 arg2) {
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/code/m_flashrom/func_8008EEE8_jp.s")
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/code/m_flashrom/func_8008EF0C_jp.s")
+s32 func_8008EF0C_jp(Save* save, u16 landId) {
+    s32 ret = FALSE;
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/code/m_flashrom/mFRm_CheckSaveData.s")
+    if (func_8008EEE8_jp(save)) {
+        if (((save->unk_00008 & 0xFF00) == 0x3000) && (save->unk_00008 == landId)) {
+            ret = TRUE;
+        }
+    }
+    return ret;
+}
+
+s32 mFRm_CheckSaveData(void) {
+    return func_8008EF0C_jp(&common_data.save, common_data.save.landInfo.id);
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/code/m_flashrom/mFRm_ClearSaveCheckData.s")
 
