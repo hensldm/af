@@ -7,6 +7,9 @@
 #include "m_npc.h"
 #include "m_private.h"
 
+#define AF_COMPANY_CODE 0x3031
+#define AF_GAME_CODE 0x4E41464A
+
 typedef struct Passport {
     /* 0x0000 */ u16 unk_0000;
     /* 0x0002 */ UNK_TYPE1 unk_0002[0x0006];

@@ -13,8 +13,8 @@
 PakInfo l_paks_info;
 PakCtrl l_pak_ctrl;
 
-u16 sCompanyCode = 0x3031;
-u32 sGameCode = 0x4E41464A;
+u16 sCompanyCode = AF_COMPANY_CODE;
+u32 sGameCode = AF_GAME_CODE;
 char* l_game_name = D_8010EF70_jp;
 char* l_ext_name_table[2] = { "\x1A", "\x1B" };
 PakInfo* g_paks_info_p = &l_paks_info;
