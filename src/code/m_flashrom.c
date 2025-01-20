@@ -4,6 +4,7 @@
 #include "libu64/gfxprint.h"
 
 #include "m_common_data.h"
+#include "m_cpak.h"
 #include "sFRm_flashrom.h"
 
 extern s32 D_80106A90_jp;
@@ -88,7 +89,14 @@ u16 func_8008EEB4_jp(void* arg0, u32 size, u16 arg2) {
     return ~(func_8008EE7C_jp(arg0, size) - arg2) + 1;
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/code/m_flashrom/func_8008EEE8_jp.s")
+s32 func_8008EEE8_jp(CommonData* common_data) {
+    s32 ret = FALSE;
+
+    if (common_data->save.unk_00004 == AF_GAME_CODE) {
+        ret = TRUE;
+    }
+    return ret;
+}
 
 s32 func_8008EF0C_jp(CommonData* common_data, u16 landId) {
     s32 ret = FALSE;
