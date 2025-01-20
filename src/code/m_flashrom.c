@@ -90,8 +90,16 @@ u16 func_8008EEB4_jp(void* arg0, u32 size, u16 arg2) {
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/code/m_flashrom/func_8008EEE8_jp.s")
 
-s32 func_8008EF0C_jp(CommonData* common_data, u16 landId);
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/code/m_flashrom/func_8008EF0C_jp.s")
+s32 func_8008EF0C_jp(CommonData* common_data, u16 landId) {
+    s32 ret = FALSE;
+
+    if (func_8008EEE8_jp(common_data)) {
+        if (((common_data->save.unk_00008 & 0xFF00) == 0x3000) && (common_data->save.unk_00008 == landId)) {
+            ret = TRUE;
+        }
+    }
+    return ret;
+}
 
 s32 mFRm_CheckSaveData(void) {
     return func_8008EF0C_jp(&common_data, common_data.save.landInfo.id);

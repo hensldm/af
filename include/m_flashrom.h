@@ -11,7 +11,7 @@ void func_8008ED14_jp(struct gfxprint* printer);
 void func_8008EE24_jp(void);
 u16 func_8008EE7C_jp(u16* arg0, u32 size);
 u16 func_8008EEB4_jp(void* arg0, u32 size, u16 arg2);
-s32 func_8008EEE8_jp(UNK_PTR);
+s32 func_8008EEE8_jp(struct CommonData* common_data);
 s32 mFRm_CheckSaveData(void);
 void mFRm_ClearSaveCheckData(struct CommonData* common_data);
 // void func_8008EFDC_jp();
