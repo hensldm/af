@@ -70,7 +70,8 @@ typedef struct Save {
     /* 0x00000 */ u8 unk_00000[0x4];
     /* 0x00000 */ u32 unk_00004;
     /* 0x00008 */ u16 unk_00008;
-    /* 0x0000A */ u8 unk_00000A[0xA];
+    /* 0x0000A */ lbRTC_time_c unk_00000A;
+    /* 0x00012 */ u16 unk_000012;
     /* 0x00014 */ s32 sceneNo;
     /* 0x00018 */ u8 nowNpcMax;
     /* 0x00019 */ u8 removeAnimalIdx;
