@@ -135,8 +135,14 @@ void func_8008EFDC_jp(Save* save) {
     lbRTC_TimeCopy(&save->unk_00000A, &common_data.time.rtcTime);
 }
 
-void func_8008F020_jp(B8013A380Struct* arg0);
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/code/m_flashrom/func_8008F020_jp.s")
+void func_8008F020_jp(B8013A380Struct* arg0) {
+    arg0->unk_00 = 0;
+    arg0->unk_04 = 0;
+    arg0->unk_08 = 0;
+    arg0->unk_0C = NULL;
+    arg0->unk_10 = NULL;
+    arg0->unk_14 = 0;
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/code/m_flashrom/func_8008F040_jp.s")
 
