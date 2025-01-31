@@ -8,8 +8,12 @@ struct gfxprint;
 struct Save;
 
 typedef struct B8013A380Struct {
-    /* 0x0 */ s32 unk_00;
-    /* 0x4 */ UNK_TYPE1 unk_04[0x14];
+    /* 0x00 */ s32 unk_00;
+    /* 0x04 */ u32 unk_04;
+    /* 0x08 */ u32 unk_08;
+    /* 0x0C */ void* unk_0C;
+    /* 0x10 */ void* unk_10;
+    /* 0x14 */ s32 unk_14;
 } B8013A380Struct; // size >= 0x18
 
 void func_8008ED14_jp(struct gfxprint* printer);

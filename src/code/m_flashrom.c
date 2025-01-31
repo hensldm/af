@@ -135,11 +135,44 @@ void func_8008EFDC_jp(Save* save) {
     lbRTC_TimeCopy(&save->unk_00000A, &common_data.time.rtcTime);
 }
 
+void func_8008F020_jp(B8013A380Struct* arg0);
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/code/m_flashrom/func_8008F020_jp.s")
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/code/m_flashrom/func_8008F040_jp.s")
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/code/m_flashrom/func_8008F0A0_jp.s")
+UNK_RET func_8008F0A0_jp(UNUSED UNK_PTR arg0, UNUSED UNK_TYPE arg1, B8013A380Struct* arg2) {
+    u32 pageNum;
+    s32 ret = 0;
+
+    pageNum = arg2->unk_08 * 0x200;
+    if (sFRm_IsBusy() == 1) {
+        if (sFRm_GetResult() == -1) {
+            if (arg2->unk_14 < 3) {
+                arg2->unk_0C = arg2->unk_10;
+                sFRm_WriteAsync(arg2->unk_0C, pageNum, 0x80);
+                arg2->unk_14++;
+                arg2->unk_04 = pageNum;
+            } else {
+                func_8008F020_jp(arg2);
+                ret = -1;
+                func_8008ECC8_jp(2);
+            }
+        } else {
+            arg2->unk_04 += 0x80;
+            if (arg2->unk_04 >= (pageNum + 0x200)) {
+                sFRm_AwaitResult();
+                func_8008F020_jp(arg2);
+                ret = 1;
+            } else {
+                sFRm_AwaitResult();
+                arg2->unk_0C = (u8*)arg2->unk_0C + 0x4000;
+                sFRm_WriteAsync(arg2->unk_0C, arg2->unk_04, 0x80);
+            }
+        }
+    }
+
+    return ret;
+}
 
 UNK_RET func_8008F1BC_jp(UNK_PTR arg0, UNK_TYPE arg1) {
     UNK_RET ret = 1;
