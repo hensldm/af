@@ -202,7 +202,10 @@ UNK_RET func_8008F1BC_jp(UNK_PTR arg0, UNK_TYPE arg1) {
     return ret;
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/code/m_flashrom/func_8008F210_jp.s")
+void func_8008F210_jp(void) {
+    func_8008F020_jp(&B_8013A380_jp);
+    D_80106A94_jp = 0;
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/code/m_flashrom/func_8008F23C_jp.s")
 
