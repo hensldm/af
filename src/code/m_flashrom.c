@@ -144,7 +144,19 @@ void func_8008F020_jp(B8013A380Struct* arg0) {
     arg0->unk_14 = 0;
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/code/m_flashrom/func_8008F040_jp.s")
+UNK_RET func_8008F040_jp(UNK_PTR* arg0, UNK_TYPE arg1, B8013A380Struct* arg2) {
+    u32 var_a1 = (arg1 == 0) ? 0 : 0x200;
+
+    arg2->unk_00 = 1;
+    arg2->unk_04 = var_a1;
+    arg2->unk_08 = arg1;
+    arg2->unk_0C = arg0;
+    arg2->unk_10 = arg2->unk_0C;
+    arg2->unk_14 = 0;
+
+    sFRm_WriteAsync(arg2->unk_0C, arg2->unk_04, 0x80);
+    return 0;
+}
 
 UNK_RET func_8008F0A0_jp(UNUSED UNK_PTR arg0, UNUSED UNK_TYPE arg1, B8013A380Struct* arg2) {
     u32 pageNum;
