@@ -122,7 +122,13 @@ void mFRm_ClearSaveCheckData(Save* save) {
     save->unk_000012 = 0;
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/code/m_flashrom/func_8008EFDC_jp.s")
+void func_8008EFDC_jp(Save* save) {
+    u16 landId = common_data.save.landInfo.id;
+
+    save->unk_00004 = AF_GAME_CODE;
+    save->unk_00008 = landId;
+    lbRTC_TimeCopy(&save->unk_00000A, &common_data.time.rtcTime);
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/code/m_flashrom/func_8008F020_jp.s")
 

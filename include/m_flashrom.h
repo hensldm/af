@@ -14,7 +14,7 @@ u16 func_8008EEB4_jp(void* arg0, u32 size, u16 arg2);
 s32 func_8008EEE8_jp(struct Save* save);
 s32 mFRm_CheckSaveData(void);
 void mFRm_ClearSaveCheckData(struct Save* save);
-// void func_8008EFDC_jp();
+void func_8008EFDC_jp(struct Save* save);
 // void func_8008F020_jp();
 // void func_8008F040_jp();
 // void func_8008F0A0_jp();
