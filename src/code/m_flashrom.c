@@ -14,9 +14,9 @@ extern s32 D_80106A94_jp;
 extern u8 D_80106A98_jp;
 extern s32 D_80106A9C_jp[6];
 
-typedef s32 (*D80106AB4Func)(UNK_PTR arg0, UNK_TYPE arg1, UNK_PTR arg2);
+typedef s32 (*D80106AB4Func)(UNK_PTR arg0, UNK_TYPE arg1, B8013A380Struct* arg2);
 extern D80106AB4Func D_80106AB4_jp[2];
-typedef s32 (*D80106ABCFunc)(UNK_PTR arg0, UNK_PTR arg1, UNK_PTR arg2);
+typedef s32 (*D80106ABCFunc)(UNK_PTR arg0, UNK_PTR arg1, B8013A380Struct* arg2);
 extern D80106ABCFunc D_80106ABC_jp[4];
 
 extern B8013A380Struct B_8013A380_jp;
@@ -213,14 +213,18 @@ s32 func_8008F23C_jp(void) {
     return D_80106A94_jp;
 }
 
-s32 func_8008F24C_jp(UNK_PTR arg0, UNK_PTR arg1, UNK_PTR arg2);
+s32 func_8008F24C_jp(UNK_PTR arg0, UNK_PTR arg1, B8013A380Struct* arg2);
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/code/m_flashrom/func_8008F24C_jp.s")
 
-s32 func_8008F530_jp(UNK_PTR arg0, UNK_PTR arg1, UNK_PTR arg2);
+s32 func_8008F530_jp(UNK_PTR arg0, UNK_PTR arg1, B8013A380Struct* arg2);
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/code/m_flashrom/func_8008F530_jp.s")
 
-s32 func_8008F5FC_jp(UNK_PTR arg0, UNK_PTR arg1, UNK_PTR arg2);
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/code/m_flashrom/func_8008F5FC_jp.s")
+s32 func_8008F5FC_jp(UNK_PTR arg0, UNK_PTR arg1, B8013A380Struct* arg2) {
+    arg2->unk_0C = arg2->unk_10;
+    sFRm_WriteAsync(arg2->unk_0C, arg2->unk_04, 0x80);
+    arg2->unk_00 = 3;
+    return 0;
+}
 
 s32 func_8008F648_jp(UNK_PTR arg0, UNUSED UNK_PTR arg1, B8013A380Struct* arg2) {
     u32 pageNum;
