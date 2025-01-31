@@ -222,8 +222,39 @@ s32 func_8008F530_jp(UNK_PTR arg0, UNK_PTR arg1, UNK_PTR arg2);
 s32 func_8008F5FC_jp(UNK_PTR arg0, UNK_PTR arg1, UNK_PTR arg2);
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/code/m_flashrom/func_8008F5FC_jp.s")
 
-s32 func_8008F648_jp(UNK_PTR arg0, UNK_PTR arg1, UNK_PTR arg2);
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/code/m_flashrom/func_8008F648_jp.s")
+s32 func_8008F648_jp(UNK_PTR arg0, UNUSED UNK_PTR arg1, B8013A380Struct* arg2) {
+    u32 pageNum;
+    s32 ret = 0;
+
+    pageNum = arg2->unk_08 * 0x200;
+    if (sFRm_IsBusy() == 1) {
+        if (sFRm_GetResult() == -1) {
+            if (arg2->unk_14 < 3) {
+                arg2->unk_0C = arg2->unk_10;
+                sFRm_WriteAsync(arg0, pageNum, 0x80);
+                arg2->unk_14++;
+                arg2->unk_04 = pageNum;
+            } else {
+                func_8008F020_jp(arg2);
+                ret = 1;
+                func_8008ECC8_jp(2);
+            }
+        } else {
+            arg2->unk_04 += 0x80;
+            if (arg2->unk_04 >= (pageNum + 0x200)) {
+                sFRm_AwaitResult();
+                func_8008F020_jp(arg2);
+                ret = 1;
+            } else {
+                sFRm_AwaitResult();
+                arg2->unk_0C = (u8*)arg2->unk_0C + 0x4000;
+                sFRm_WriteAsync(arg2->unk_0C, arg2->unk_04, 0x80);
+            }
+        }
+    }
+
+    return ret;
+}
 
 s32 func_8008F768_jp(void* arg0, void* arg1) {
     s32 ret;
