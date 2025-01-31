@@ -7,6 +7,11 @@
 struct gfxprint;
 struct Save;
 
+typedef struct B8013A380Struct {
+    /* 0x0 */ s32 unk_00;
+    /* 0x4 */ UNK_TYPE1 unk_04[0x14];
+} B8013A380Struct; // size >= 0x18
+
 void func_8008ED14_jp(struct gfxprint* printer);
 void func_8008EE24_jp(void);
 u16 func_8008EE7C_jp(u16* arg0, u32 size);
@@ -18,7 +23,7 @@ void func_8008EFDC_jp(struct Save* save);
 // void func_8008F020_jp();
 // void func_8008F040_jp();
 // void func_8008F0A0_jp();
-// void func_8008F1BC_jp();
+UNK_RET func_8008F1BC_jp(UNK_PTR arg0, UNK_TYPE arg1);
 void func_8008F210_jp(void);
 // void func_8008F23C_jp();
 // void func_8008F24C_jp();

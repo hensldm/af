@@ -14,6 +14,11 @@ extern s32 D_80106A94_jp;
 extern u8 D_80106A98_jp;
 extern s32 D_80106A9C_jp[6];
 
+typedef UNK_RET (*D80106AB4Func)(UNK_PTR arg0, UNK_TYPE arg1, UNK_PTR arg2);
+extern D80106AB4Func D_80106AB4_jp[2];
+
+extern B8013A380Struct B_8013A380_jp;
+
 void func_8008ECA0_jp(void) {
     bzero(&D_80106A9C_jp, sizeof(D_80106A9C_jp));
 }
@@ -136,7 +141,15 @@ void func_8008EFDC_jp(Save* save) {
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/code/m_flashrom/func_8008F0A0_jp.s")
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/code/m_flashrom/func_8008F1BC_jp.s")
+UNK_RET func_8008F1BC_jp(UNK_PTR arg0, UNK_TYPE arg1) {
+    UNK_RET ret = 1;
+
+    if ((B_8013A380_jp.unk_00 >= 0) && (B_8013A380_jp.unk_00 < ARRAY_COUNT(D_80106AB4_jp))) {
+        ret = D_80106AB4_jp[B_8013A380_jp.unk_00](arg0, arg1, &B_8013A380_jp);
+    }
+
+    return ret;
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/code/m_flashrom/func_8008F210_jp.s")
 
