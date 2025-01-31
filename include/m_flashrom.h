@@ -26,7 +26,7 @@ void mFRm_ClearSaveCheckData(struct Save* save);
 void func_8008EFDC_jp(struct Save* save);
 UNK_RET func_8008F1BC_jp(UNK_PTR arg0, UNK_TYPE arg1);
 void func_8008F210_jp(void);
-// void func_8008F23C_jp();
+s32 func_8008F23C_jp(void);
 // void func_8008F24C_jp();
 // void func_8008F530_jp();
 // void func_8008F5FC_jp();
