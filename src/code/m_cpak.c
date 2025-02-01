@@ -312,7 +312,7 @@ UNK_RET func_80079708_jp(s32 arg0) {
 
 s32 func_80079760_jp(void) {
     PakInfo* info = mCPk_get_pkinfo();
-    PrivateInfo* iter = &common_data.save.saveFilePrivateInfo[0];
+    PrivateInfo* iter = &common_data.save.flash.saveFilePrivateInfo[0];
     s32 ret = -1;
     s32 temp_v0_2;
     s32 i;
@@ -327,7 +327,7 @@ s32 func_80079760_jp(void) {
 
     if ((temp_v0_2 == 1) && !mPr_NullCheckPersonalID(&l_pak_ctrl.passport.priv.playerId)) {
         ret = 4;
-        for (i = 0; i < ARRAY_COUNT(common_data.save.saveFilePrivateInfo); i++) {
+        for (i = 0; i < ARRAY_COUNT(common_data.save.flash.saveFilePrivateInfo); i++) {
             if (mPr_CheckCmpPrivate(&l_pak_ctrl.passport.priv, iter) == TRUE) {
                 ret = i;
                 break;

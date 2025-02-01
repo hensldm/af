@@ -1020,10 +1020,10 @@ u8* mRmTp_CheckFtrBirthInfoTop() {
 s32 mRmTp_GetFloorIdx(void) {
     s32 sceneNo;
 
-    sceneNo = common_data.save.sceneNo;
+    sceneNo = common_data.save.flash.sceneNo;
     if ((sceneNo == SCENE_MY_ROOM_S) || (sceneNo == SCENE_MY_ROOM_M) || (sceneNo == SCENE_MY_ROOM_L)) {
         s32 id = mFI_GetFieldId() - 0x6000;
-        mHm_hs_c* home = &common_data.save.homes[id];
+        mHm_hs_c* home = &common_data.save.flash.homes[id];
         s32 idx = home->roomId & 0x3F;
         return idx;
     }
@@ -1111,7 +1111,7 @@ u16 mRmTp_FtrItemNo2Item1ItemNo(u16 item) {
 u8 mRmTp_melody[16];
 
 void mRmTp_MakeMelodyData() {
-    u64 melody = common_data.save.melody;
+    u64 melody = common_data.save.flash.melody;
 
     mMld_TransformMelodyData_u64_2_u8(mRmTp_melody, melody);
 }

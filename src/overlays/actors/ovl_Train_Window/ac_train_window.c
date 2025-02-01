@@ -71,7 +71,7 @@ s32 aTrainWindow_GetTreePalletIdx(void) {
 void Train_Window_Actor_ct(Actor* thisx, UNUSED Game_Play* play) {
     Train_Window* this = (Train_Window*)thisx;
 
-    if (common_data.save.sceneNo == 15) {
+    if (common_data.save.flash.sceneNo == 15) {
         this->drawType = aTrainWindow_NoDraw;
         this->singleScrollX = 0;
         this->singleScrollY = 0;

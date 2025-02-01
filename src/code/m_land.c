@@ -109,7 +109,7 @@ void mLd_SetFreeStrLandMuraName(char* name, s32 freeStr) {
 }
 
 char* mLd_GetLandName() {
-    return common_data.save.landInfo.name;
+    return common_data.save.flash.landInfo.name;
 }
 
 u16 mLd_MakeLandId() {
@@ -131,11 +131,12 @@ s32 mLd_PlayerManKindCheck() {
 }
 
 s32 mLd_CheckThisLand(char* otherName, u16 otherId) {
-    return mLd_CheckCmpLand(otherName, otherId, common_data.save.landInfo.name, common_data.save.landInfo.id);
+    return mLd_CheckCmpLand(otherName, otherId, common_data.save.flash.landInfo.name,
+                            common_data.save.flash.landInfo.id);
 }
 
 void mLd_LandInfoInit() {
-    LandInfo* landInfo = &common_data.save.landInfo;
+    LandInfo* landInfo = &common_data.save.flash.landInfo;
 
     landInfo->id = mLd_MakeLandId();
     landInfo->exists = TRUE;

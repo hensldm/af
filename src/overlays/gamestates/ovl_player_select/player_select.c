@@ -283,7 +283,7 @@ void player_select_init(Game* game) {
     playerSelect->landExist = FALSE;
 
     if (mFRm_CheckSaveData() == TRUE) {
-        PrivateInfo* private = common_data.save.saveFilePrivateInfo;
+        PrivateInfo* private = common_data.save.flash.saveFilePrivateInfo;
         for (i = 0; i < PLAYER_NUM; i++, private ++) {
             char* name = playerSelect->playerNames[i];
 
@@ -302,7 +302,7 @@ void player_select_init(Game* game) {
             }
         }
 
-        mLd_CopyLandName(playerSelect->landName, common_data.save.landInfo.name);
+        mLd_CopyLandName(playerSelect->landName, common_data.save.flash.landInfo.name);
         playerSelect->landExist = TRUE;
     }
 

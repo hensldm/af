@@ -79,8 +79,8 @@ DemoNpc demo_npc_list[] = {
 s32 demo_npc_num = ARRAY_COUNT(demo_npc_list);
 
 s32 set_npc_4_title_demo(Game_Trademark* this) {
-    mNpc_SetAnimalTitleDemo(demo_npc_list, common_data.save.animals, &this->state);
-    mNpc_SetNpcList(common_data.npclist, common_data.save.animals, demo_npc_num, 0);
+    mNpc_SetAnimalTitleDemo(demo_npc_list, common_data.save.flash.animals, &this->state);
+    mNpc_SetNpcList(common_data.npclist, common_data.save.flash.animals, demo_npc_num, 0);
 
     return demo_npc_num;
 }
@@ -116,7 +116,7 @@ void trademark_goto_demo_scene(Game_Trademark* this) {
     s32 temp_v0;
 
     mCPk_InitPak(0);
-    common_data.privateInfo = &common_data.save.saveFilePrivateInfo[0];
+    common_data.privateInfo = &common_data.save.flash.saveFilePrivateInfo[0];
 
     if (mFRm_CheckSaveData() == 0) {
         PrivateInfo* privateInfo;
@@ -125,13 +125,13 @@ void trademark_goto_demo_scene(Game_Trademark* this) {
         bzero(&common_data.save, sizeof(Save));
         mFRm_ClearSaveCheckData(&common_data.save);
 
-        privateInfo = &common_data.save.saveFilePrivateInfo[0];
-        for (i = 0; i < ARRAY_COUNT(common_data.save.saveFilePrivateInfo); i++) {
+        privateInfo = &common_data.save.flash.saveFilePrivateInfo[0];
+        for (i = 0; i < ARRAY_COUNT(common_data.save.flash.saveFilePrivateInfo); i++) {
             mPr_ClearPrivateInfo(privateInfo);
             privateInfo++;
         }
 
-        common_data.save.landInfo.exists = true;
+        common_data.save.flash.landInfo.exists = true;
         common_data.houseOwnerName = 0xFFFF;
         common_data.lastFieldId = 0xFFFF;
     }
@@ -150,7 +150,7 @@ void trademark_goto_demo_scene(Game_Trademark* this) {
         common_data.unk_1014B = 3;
     }
 
-    common_data.save.sceneNo = SCENE_TITLE_DEMO;
+    common_data.save.flash.sceneNo = SCENE_TITLE_DEMO;
     mTM_set_season();
     common_data.unk_104AD = 1;
 
@@ -526,10 +526,10 @@ void trademark_main(Game* thisx) {
 }
 
 void trademark_cleanup(UNUSED Game* thisx) {
-    mHm_hs_c* homes = common_data.save.homes;
+    mHm_hs_c* homes = common_data.save.flash.homes;
     s32 i;
 
-    for (i = 0; i != ARRAY_COUNT(common_data.save.homes); i++, homes++) {
+    for (i = 0; i != ARRAY_COUNT(common_data.save.flash.homes); i++, homes++) {
         homes->unk_024 = i;
         mMl_clear_mail_box(homes->mailbox, ARRAY_COUNT(homes->mailbox));
     }

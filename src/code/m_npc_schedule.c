@@ -154,7 +154,7 @@ void mNPS_schedule_manager(void) {
 }
 
 void mNPS_set_all_schedule_area(void) {
-    Animal_c* animal = common_data.save.animals;
+    Animal_c* animal = common_data.save.flash.animals;
     s32 i;
 
     for (i = 0; i < ANIMAL_NUM_MAX; i++) {

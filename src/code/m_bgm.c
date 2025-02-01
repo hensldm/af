@@ -93,7 +93,7 @@ void mBGMDemo_make_scene_bgm(BgmDemo* demo) {
                 break;
 
             case 0x5002:
-                if (common_data.save.sceneNo == SCENE_PLAYERSELECT_SAVE) {
+                if (common_data.save.flash.sceneNo == SCENE_PLAYERSELECT_SAVE) {
                     num = 46;
                 } else {
                     num = 43;
@@ -1335,7 +1335,7 @@ void mBGMPsComp_Start_main_inform_sound(BgmPSStart* start) {
             sAdo_BgmStart(start->num);
 
             if (start->num == 43) {
-                if (common_data.save.sceneNo == SCENE_PLAYERSELECT_2) {
+                if (common_data.save.flash.sceneNo == SCENE_PLAYERSELECT_2) {
                     mBGMPsComp_arm_make(1);
                 } else {
                     mBGMPsComp_arm_make(0);

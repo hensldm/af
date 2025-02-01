@@ -2,6 +2,7 @@
 #include "global.h"
 
 #include "libu64/gfxprint.h"
+#include "PR/os_internal_flash.h"
 
 #include "m_common_data.h"
 #include "m_cpak.h"
@@ -101,7 +102,7 @@ u16 func_8008EEB4_jp(void* arg0, u32 size, u16 arg2) {
 s32 func_8008EEE8_jp(Save* save) {
     s32 ret = FALSE;
 
-    if (save->unk_00004 == AF_GAME_CODE) {
+    if (save->flash.unk_00004 == AF_GAME_CODE) {
         ret = TRUE;
     }
     return ret;
@@ -111,7 +112,7 @@ s32 func_8008EF0C_jp(Save* save, u16 landId) {
     s32 ret = FALSE;
 
     if (func_8008EEE8_jp(save)) {
-        if (((save->unk_00008 & 0xFF00) == 0x3000) && (save->unk_00008 == landId)) {
+        if (((save->flash.unk_00008 & 0xFF00) == 0x3000) && (save->flash.unk_00008 == landId)) {
             ret = TRUE;
         }
     }
@@ -119,22 +120,22 @@ s32 func_8008EF0C_jp(Save* save, u16 landId) {
 }
 
 s32 mFRm_CheckSaveData(void) {
-    return func_8008EF0C_jp(&common_data.save, common_data.save.landInfo.id);
+    return func_8008EF0C_jp(&common_data.save, common_data.save.flash.landInfo.id);
 }
 
 void mFRm_ClearSaveCheckData(Save* save) {
-    save->unk_00004 = -1;
-    save->unk_00008 = 0xFFFF;
-    mem_copy((void*)&save->unk_00000A, (void*)&mTM_rtcTime_clear_code, sizeof(lbRTC_time_c));
-    save->unk_000012 = 0;
+    save->flash.unk_00004 = -1;
+    save->flash.unk_00008 = 0xFFFF;
+    mem_copy((void*)&save->flash.unk_00000A, (void*)&mTM_rtcTime_clear_code, sizeof(lbRTC_time_c));
+    save->flash.unk_000012 = 0;
 }
 
 void func_8008EFDC_jp(Save* save) {
-    u16 landId = common_data.save.landInfo.id;
+    u16 landId = common_data.save.flash.landInfo.id;
 
-    save->unk_00004 = AF_GAME_CODE;
-    save->unk_00008 = landId;
-    lbRTC_TimeCopy(&save->unk_00000A, &common_data.time.rtcTime);
+    save->flash.unk_00004 = AF_GAME_CODE;
+    save->flash.unk_00008 = landId;
+    lbRTC_TimeCopy(&save->flash.unk_00000A, &common_data.time.rtcTime);
 }
 
 void func_8008F020_jp(B8013A380Struct* arg0) {
@@ -239,7 +240,8 @@ s32 func_8008F24C_jp(Save* arg0, Save* arg1, B8013A380Struct* arg2) {
                 var_s2 = 1;
             }
 
-            if ((func_8008EE7C_jp((void*)arg0, 0xF980) == 0) && func_8008EF0C_jp(arg0, arg0->landInfo.id)) {
+            if ((func_8008EE7C_jp((void*)&arg0->flash, sizeof(SaveFlash)) == 0) &&
+                func_8008EF0C_jp(arg0, arg0->flash.landInfo.id)) {
                 D_80106A90_jp = 0;
                 func_8008F020_jp(arg2);
                 sp30 = 1;
@@ -268,7 +270,8 @@ s32 func_8008F24C_jp(Save* arg0, Save* arg1, B8013A380Struct* arg2) {
                 var_s2 = 1;
             }
 
-            if ((func_8008EE7C_jp((void*)arg0, 0xF980) == 0) && func_8008EF0C_jp(arg0, arg0->landInfo.id)) {
+            if ((func_8008EE7C_jp((void*)&arg0->flash, sizeof(SaveFlash)) == 0) &&
+                func_8008EF0C_jp(arg0, arg0->flash.landInfo.id)) {
                 func_8008F020_jp(arg2);
                 if (sp30 == 0) {
                     D_80106A90_jp = 1;
@@ -301,7 +304,7 @@ s32 func_8008F24C_jp(Save* arg0, Save* arg1, B8013A380Struct* arg2) {
         func_8008F8A0_jp(arg0, 0);
         bzero(arg1, sizeof(Save));
         func_8008F8A0_jp(arg1, 0x200);
-        if (bcmp(arg0, arg1, 0xF980)) {
+        if (bcmp(arg0, arg1, sizeof(SaveFlash))) {
             D_80106A90_jp = 1;
             arg2->unk_00 = 1;
             arg2->unk_04 = 0x200;
@@ -407,7 +410,37 @@ s32 func_8008F768_jp(Save* arg0, Save* arg1) {
     return ret;
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/code/m_flashrom/func_8008F7C8_jp.s")
+s32 func_8008F7C8_jp(void) {
+    u8* iter = (u8*)&common_data.save;
+    s32 err;
+    s32 retries;
+    s32 end = sizeof(SaveFlash) / FLASH_BLOCK_SIZE;
+    s32 ret = 0;
+    u32 pageNum;
+
+    sFRm_EraseAll();
+    func_8008EFDC_jp(&common_data.save);
+    common_data.save.flash.unk_000012 =
+        func_8008EEB4_jp(&common_data.save.flash, sizeof(SaveFlash), common_data.save.flash.unk_000012);
+
+    for (pageNum = 0; pageNum < end; pageNum++) {
+        if (sFRm_WritePage(iter, pageNum) == -1) {
+            for (retries = 0; retries < 3; retries++) {
+                err = sFRm_WritePage(iter, pageNum);
+                if (err == 0) {
+                    break;
+                }
+            }
+
+            if (err == -1) {
+                ret = -1;
+            }
+        }
+        iter += FLASH_BLOCK_SIZE;
+    }
+
+    return ret;
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/code/m_flashrom/func_8008F8A0_jp.s")
 

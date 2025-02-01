@@ -66,55 +66,60 @@ typedef struct FamicomEmuCommonData {
     /* 0x24 */ s16 unk24;
 } FamicomEmuCommonData; // size >= 0x26
 
+typedef struct SaveFlash {
+    /* 0x0000 */ u8 unk_00000[0x4];
+    /* 0x0004 */ u32 unk_00004;
+    /* 0x0008 */ u16 unk_00008;
+    /* 0x000A */ lbRTC_time_c unk_00000A;
+    /* 0x0012 */ u16 unk_000012;
+    /* 0x0014 */ s32 sceneNo;
+    /* 0x0018 */ u8 nowNpcMax;
+    /* 0x0019 */ u8 removeAnimalIdx;
+    /* 0x001A */ u8 unk_1A[0x20 - 0x1A];
+    /* 0x0020 */ PrivateInfo saveFilePrivateInfo[PLAYER_NUM]; // player data
+    /* 0x2F60 */ LandInfo landInfo; // town name & id
+    /* 0x2F6A */ u8 unk_02F6A[0x61E];
+    /* 0x3588 */ mHm_hs_c homes[PLAYER_NUM];
+    /* 0x62A8 */ Foreground foreground[FG_BLOCK_Z_NUM][FG_BLOCK_X_NUM];
+    /* 0x9EA8 */ u8 unk_09EA8[0x70];
+    /* 0x9F18 */ Animal_c animals[ANIMAL_NUM_MAX]; // villagers in town
+    /* 0xEC70 */ AnmPersonalID_c lastRemovedAnimalId;
+    /* 0xEC7C */ u8 unk_0EC7C[0x128];
+    /* 0xEDA4 */ EventSaveInfo eventSaveInfo;
+    /* 0xEE40 */ u8 unk_0EE40[0x118];
+    /* 0xEF58 */ u16 fruit;
+    /* 0xEF5A */ UNK_TYPE1 unk_0EF5A[2];
+    /* 0xEF5C */ lbRTC_time_c allGrowRenewTime;
+    /* 0xEF64 */ UNK_TYPE1 unk_0EF64[0x4B8];
+    /* 0xF41C */ SnowmanData snowmanData[SNOWMAN_SAVE_COUNT];
+    /* 0xF428 */ u64 melody;
+    /* 0xF430 */ UNK_TYPE1 unk_F430[0x4];
+    /* 0xF434 */ lbRTC_ymd_t renewTime;
+    /* 0xF438 */ u8 stationType;
+    /* 0xF439 */ u8 saveWeather;
+    /* 0xF440 */ u8 unk_F440[0x2];
+    /* 0xF43C */ u16 deposit[FG_BLOCK_X_NUM * FG_BLOCK_Z_NUM][UT_Z_NUM]; // flags for which items are buried around town
+    /* 0xF7FC */ lbRTC_time_c lastGrowTime;
+    /* 0xF804 */ PrivateMotherMail motherMailInfo[PLAYER_NUM];
+    /* 0xF83C */ u8 unk_0F83C[0x8];
+    /* 0xF844 */ FamicomEmuCommonData famicomEmuCommonData;
+    /* 0xF86A */ UNK_TYPE1 unk_0F86A[0x2];
+    /* 0xF86C */ u8 npcUsedTable[32];
+    /* 0xF88C */ UNK_TYPE1 unk_0F88A[0x10];
+    /* 0xF89C */ lbRTC_time_c unk_0F89C;
+    /* 0xF8A4 */ lbRTC_time_c unk_0F8A4;
+    /* 0xF8AC */ UNK_TYPE1 unk_0F8AC;
+    /* 0xF8AD */ u8 snowmanYear;  // Year last snowman was built.
+    /* 0xF8AE */ u8 snowmanMonth; // Month last snowman was built.
+    /* 0xF8AF */ u8 snowmanDay;   // Day last snowman was built.
+    /* 0xF8B0 */ u8 snowmanHour;  // Hour last snowman was built.
+    /* 0XF8B1 */ u8 haniwaScheduled;
+    /* 0xF8B2 */ UNK_TYPE1 unk_0F8B2[0xCE];
+} SaveFlash; // size = 0xF980
+
 typedef struct Save {
-    /* 0x00000 */ u8 unk_00000[0x4];
-    /* 0x00000 */ u32 unk_00004;
-    /* 0x00008 */ u16 unk_00008;
-    /* 0x0000A */ lbRTC_time_c unk_00000A;
-    /* 0x00012 */ u16 unk_000012;
-    /* 0x00014 */ s32 sceneNo;
-    /* 0x00018 */ u8 nowNpcMax;
-    /* 0x00019 */ u8 removeAnimalIdx;
-    /* 0x0001A */ u8 unk_1A[0x20 - 0x1A];
-    /* 0x00020 */ PrivateInfo saveFilePrivateInfo[PLAYER_NUM]; // player data
-    /* 0x02F60 */ LandInfo landInfo; // town name & id
-    /* 0x02F6A */ u8 unk_02F6A[0x61E];
-    /* 0x03588 */ mHm_hs_c homes[PLAYER_NUM];
-    /* 0x062A8 */ Foreground foreground[FG_BLOCK_Z_NUM][FG_BLOCK_X_NUM];
-    /* 0x09EA8 */ u8 unk_09EA8[0x70];
-    /* 0x09F18 */ Animal_c animals[ANIMAL_NUM_MAX]; // villagers in town
-    /* 0x0EC70 */ AnmPersonalID_c lastRemovedAnimalId;
-    /* 0x0EC7C */ u8 unk_0EC7C[0x128];
-    /* 0x0EDA4 */ EventSaveInfo eventSaveInfo;
-    /* 0x0EE40 */ u8 unk_0EE40[0x118];
-    /* 0x0EF58 */ u16 fruit;
-    /* 0x0EF5A */ UNK_TYPE1 unk_0EF5A[2];
-    /* 0x0EF5C */ lbRTC_time_c allGrowRenewTime;
-    /* 0x0EF64 */ UNK_TYPE1 unk_0EF64[0x4B8];
-    /* 0x0F41C */ SnowmanData snowmanData[SNOWMAN_SAVE_COUNT];
-    /* 0x0F428 */ u64 melody;
-    /* 0x0F430 */ UNK_TYPE1 unk_F430[0x4];
-    /* 0x0F434 */ lbRTC_ymd_t renewTime;
-    /* 0x0F438 */ u8 stationType;
-    /* 0x0F439 */ u8 saveWeather;
-    /* 0x0F440 */ u8 unk_F440[0x2];
-    /* 0x0F43C */ u16 deposit[FG_BLOCK_X_NUM * FG_BLOCK_Z_NUM][UT_Z_NUM]; // flags for which items are buried around town
-    /* 0x0F7FC */ lbRTC_time_c lastGrowTime;
-    /* 0x0F804 */ PrivateMotherMail motherMailInfo[PLAYER_NUM];
-    /* 0x0F83C */ u8 unk_0F83C[0x8];
-    /* 0x0F844 */ FamicomEmuCommonData famicomEmuCommonData;
-    /* 0x0F86A */ UNK_TYPE1 unk_0F86A[0x2];
-    /* 0x0F86C */ u8 npcUsedTable[32];
-    /* 0x0F88C */ UNK_TYPE1 unk_0F88A[0x10];
-    /* 0x0F89C */ lbRTC_time_c unk_0F89C;
-    /* 0x0F8A4 */ lbRTC_time_c unk_0F8A4;
-    /* 0x0F8AC */ UNK_TYPE1 unk_0F8AC;
-    /* 0x0F8AD */ u8 snowmanYear;  // Year last snowman was built.
-    /* 0x0F8AE */ u8 snowmanMonth; // Month last snowman was built.
-    /* 0x0F8AF */ u8 snowmanDay;   // Day last snowman was built.
-    /* 0x0F8B0 */ u8 snowmanHour;  // Hour last snowman was built.
-    /* 0X0F8B1 */ u8 haniwaScheduled;
-    /* 0x0F8B2 */ UNK_TYPE1 unk_0F8B2[0x74E];
+    /* 0x0000 */ SaveFlash flash;
+    /* 0xF980 */ UNK_TYPE1 unk_0F8B2[0x680];
 } Save; // size = 0x10000
 
 typedef struct CommonData {

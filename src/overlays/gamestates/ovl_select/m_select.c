@@ -51,7 +51,7 @@ NameFunction nf_tbl[SCENE_NUM] = {
 };
 
 void game_next_play(Game* game, s32 scene) {
-    common_data.save.sceneNo = scene;
+    common_data.save.flash.sceneNo = scene;
     STOP_GAMESTATE(game);
     SET_NEXT_GAMESTATE(game, play_init, sizeof(Game_Play));
     mHm_SetNowHome();
@@ -156,7 +156,7 @@ s32 select_check_A_button_weather(UNUSED Game_Select* select) {
         u8 saved;
         saved = weather;
         saved = weather << 4;
-        common_data.save.saveWeather = saved | 3;
+        common_data.save.flash.saveWeather = saved | 3;
     }
 
     return 0;
@@ -955,7 +955,7 @@ void select_init(Game* game) {
 
     SetGameFrame(1);
 
-    common_data.unk_10004 = common_data.save.sceneNo;
+    common_data.unk_10004 = common_data.save.flash.sceneNo;
     common_data.unk_104AD = 0;
     common_data.privateInfo->inventory.loan = 1000;
 

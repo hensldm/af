@@ -467,8 +467,8 @@ void Scene_player_select(s32 sceneNo, s32 npcActor) {
     s32 selected;
 
     metVillagersBitfield = 0;
-    animal = common_data.save.animals;
-    if (sceneNo != common_data.save.sceneNo) {
+    animal = common_data.save.flash.animals;
+    if (sceneNo != common_data.save.flash.sceneNo) {
         return;
     }
 
@@ -480,8 +480,9 @@ void Scene_player_select(s32 sceneNo, s32 npcActor) {
             Anmmem_c* memory = animal->memories;
 
             for (j = 0; j < ANIMAL_MEMORY_NUM; j++) {
-                if (memory->memoryPlayerId.landId == common_data.save.landInfo.id &&
-                    mLd_CheckCmpLandName(memory->memoryPlayerId.landName, common_data.save.landInfo.name) == TRUE) {
+                if (memory->memoryPlayerId.landId == common_data.save.flash.landInfo.id &&
+                    mLd_CheckCmpLandName(memory->memoryPlayerId.landName, common_data.save.flash.landInfo.name) ==
+                        TRUE) {
                     metVillagersBitfield |= 1 << i;
                     metVillagersNum++;
                     break;
@@ -498,10 +499,10 @@ void Scene_player_select(s32 sceneNo, s32 npcActor) {
     if (metVillagersNum == 0) {
         do {
             selected = RANDOM(ANIMAL_NUM_MAX);
-        } while (mNpc_CheckFreeAnimalPersonalID(&common_data.save.animals[selected].id));
+        } while (mNpc_CheckFreeAnimalPersonalID(&common_data.save.flash.animals[selected].id));
         if (1) {};
-        npcId = common_data.save.animals[selected].id.npcId;
-        found = mNpc_SearchAnimalinfo(common_data.save.animals, npcId, ANIMAL_NUM_MAX);
+        npcId = common_data.save.flash.animals[selected].id.npcId;
+        found = mNpc_SearchAnimalinfo(common_data.save.flash.animals, npcId, ANIMAL_NUM_MAX);
     } else {
         /* Pick a random villager which has met a player in town */
 
@@ -516,10 +517,10 @@ void Scene_player_select(s32 sceneNo, s32 npcActor) {
             }
             metVillagersBitfield >>= 1;
         }
-        npcId = common_data.save.animals[found].id.npcId;
+        npcId = common_data.save.flash.animals[found].id.npcId;
     }
 
-    mNpc_RegistEventNpc(npcActor, npcId, npcId, common_data.save.animals[found].cloth);
+    mNpc_RegistEventNpc(npcActor, npcId, npcId, common_data.save.flash.animals[found].cloth);
 }
 
 void Scene_Proc_Ctrl_Actor_Ptr(Game_Play* play, SceneData* sceneData);
@@ -716,7 +717,7 @@ s32 goto_emu_game(Game_Play* play, s16 famicomRomId) {
         res = TRUE;
 
         door_data = &common_data.famicomEmuDoorData;
-        door_data->nextSceneId = common_data.save.sceneNo;
+        door_data->nextSceneId = common_data.save.flash.sceneNo;
         door_data->exitOrientation = 0;
         door_data->exitType = 0;
         door_data->params = 0;
@@ -735,5 +736,5 @@ void return_emu_game(Game* game) {
     common_data.doorData.nextSceneId = common_data.famicomEmuDoorData.nextSceneId + 1;
     game->unk_74 = FALSE;
     game_goto_next_game_play(game);
-    common_data.save.sceneNo = common_data.famicomEmuDoorData.nextSceneId;
+    common_data.save.flash.sceneNo = common_data.famicomEmuDoorData.nextSceneId;
 }

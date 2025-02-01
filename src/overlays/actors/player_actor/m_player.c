@@ -1176,7 +1176,8 @@ void Player_actor_SetActorUki(Actor* actor, Game* game) {
     Player* player = (Player*)actor;
     Game_Play* play = (Game_Play*)game;
 
-    if (Player_actor_CheckScene_AbleOutItem(common_data.save.sceneNo) != FALSE && player->fishingRodActor == NULL) {
+    if (Player_actor_CheckScene_AbleOutItem(common_data.save.flash.sceneNo) != FALSE &&
+        player->fishingRodActor == NULL) {
         player->fishingRodActor = Actor_info_name_search(&play->actorInfo, ACTOR_UKI, ACTOR_PART_4);
     }
 }

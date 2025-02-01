@@ -198,7 +198,7 @@ void mActorShadow_DrawActorShadow(Actor* actor, ShadowInfo* shadow, Game* game, 
     u8 g;
     u8 b;
     f32 yAdjust;
-    s32 scene = common_data.save.sceneNo;
+    s32 scene = common_data.save.flash.sceneNo;
 
     mActorShadow_GetLastAlphaScale(&scale, &alpha, actor, shadow);
 

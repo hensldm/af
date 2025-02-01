@@ -465,7 +465,7 @@ s32 func_80096CDC_jp() {
     UNUSED s32 pad;
     u16 homeId = common_data.houseOwnerName & 3;
 
-    if (!mEv_CheckFirstIntro() && mPr_NullCheckPersonalID(&common_data.save.homes[homeId].ownerID)) {
+    if (!mEv_CheckFirstIntro() && mPr_NullCheckPersonalID(&common_data.save.flash.homes[homeId].ownerID)) {
         ret = FALSE;
     }
 
@@ -491,7 +491,7 @@ s32 mEnv_GetNowRoomPointLightInfo(UNUSED Game_Play* play, s_xyz* pos, u8* color,
 
             power[0] = 1000;
 
-            switch (common_data.save.sceneNo) {
+            switch (common_data.save.flash.sceneNo) {
                 case SCENE_MY_ROOM_S: {
                     if (func_80096CDC_jp() == TRUE) {
                         SET_POS(pos, 120, 180, 180);
@@ -551,7 +551,7 @@ s32 mEnv_GetNowRoomPointLightInfo(UNUSED Game_Play* play, s_xyz* pos, u8* color,
         }
 
         case FIELD_DRAW_TYPE_TRAIN: {
-            switch (common_data.save.sceneNo) {
+            switch (common_data.save.flash.sceneNo) {
                 case SCENE_START_DEMO: {
                     common_data.sunlightFlag = FALSE;
 
@@ -588,7 +588,7 @@ void mEnv_RoomTypePointLightSet(Game_Play* play) {
 
     if (mEnv_GetNowRoomPointLightInfo(play2, &pos, color, &power, &l_mEnv_point_light_is_flame_electric_light) ==
         TRUE) {
-        if (common_data.save.sceneNo == SCENE_NPC_HOUSE && mEnv_CheckNpcRoomPointLightNiceStatus() == FALSE) {
+        if (common_data.save.flash.sceneNo == SCENE_NPC_HOUSE && mEnv_CheckNpcRoomPointLightNiceStatus() == FALSE) {
             l_mEnv_index_light_switch_electric_light = 1;
         } else {
             l_mEnv_index_light_switch_electric_light = 0;
@@ -762,9 +762,9 @@ void mEnv_ChangeRGBLight(u8* dst, u8* light0, u8* light1, f32 f0) {
 void mEnv_ChangeDiffuseVctlSet(BaseLight* baseLight) {
     s32 secondsRadAngle;
 
-    if (common_data.save.sceneNo == SCENE_CONVENI || common_data.save.sceneNo == SCENE_SUPER ||
-        common_data.save.sceneNo == SCENE_DEPART || common_data.save.sceneNo == SCENE_DEPART_2 ||
-        common_data.save.sceneNo == SCENE_BUGGY || common_data.save.sceneNo == SCENE_KAMAKURA) {
+    if (common_data.save.flash.sceneNo == SCENE_CONVENI || common_data.save.flash.sceneNo == SCENE_SUPER ||
+        common_data.save.flash.sceneNo == SCENE_DEPART || common_data.save.flash.sceneNo == SCENE_DEPART_2 ||
+        common_data.save.flash.sceneNo == SCENE_BUGGY || common_data.save.flash.sceneNo == SCENE_KAMAKURA) {
         baseLight->sunDir[0] = 0;
         baseLight->sunDir[1] = 69;
         baseLight->sunDir[2] = 97;
@@ -840,9 +840,9 @@ void mEnv_CalcSetLight_train(BaseLight* light) {
     s32 bColor;
     f32 inv;
 
-    if (common_data.save.sceneNo == SCENE_START_DEMO && l_mEnv_sun_percent_electric_light < 1.0f) {
+    if (common_data.save.flash.sceneNo == SCENE_START_DEMO && l_mEnv_sun_percent_electric_light < 1.0f) {
         inv = 1.0f - l_mEnv_sun_percent_electric_light;
-        if (common_data.save.sceneNo == SCENE_START_DEMO) {
+        if (common_data.save.flash.sceneNo == SCENE_START_DEMO) {
             rColor = 35.0f * inv;
             gColor = 30.0f * inv;
             bColor = 40.0f * inv;
@@ -900,12 +900,12 @@ void mEnv_SetBaseLight(Kankyo* kankyo) {
             mEnv_CalcSetLight(&kankyo->baseLight, &l_mEnv_kcolor_data_p_sel, &l_mEnv_kcolor_data_p_sel, 0.5f);
             break;
         default:
-            if (common_data.save.sceneNo == SCENE_CONVENI || common_data.save.sceneNo == SCENE_SUPER ||
-                common_data.save.sceneNo == SCENE_DEPART || common_data.save.sceneNo == SCENE_DEPART_2) {
+            if (common_data.save.flash.sceneNo == SCENE_CONVENI || common_data.save.flash.sceneNo == SCENE_SUPER ||
+                common_data.save.flash.sceneNo == SCENE_DEPART || common_data.save.flash.sceneNo == SCENE_DEPART_2) {
                 mEnv_CalcSetLight(&kankyo->baseLight, &l_mEnv_kcolor_shop, &l_mEnv_kcolor_shop, 0.5f);
-            } else if (common_data.save.sceneNo == SCENE_BUGGY) {
+            } else if (common_data.save.flash.sceneNo == SCENE_BUGGY) {
                 mEnv_CalcSetLight(&kankyo->baseLight, &l_mEnv_kcolor_buggy, &l_mEnv_kcolor_buggy, 0.5f);
-            } else if (common_data.save.sceneNo == SCENE_KAMAKURA) {
+            } else if (common_data.save.flash.sceneNo == SCENE_KAMAKURA) {
                 mEnv_CalcSetLight(&kankyo->baseLight, &l_mEnv_kcolor_kamakura, &l_mEnv_kcolor_kamakura, 0.5f);
             } else {
                 mEnv_CalcSetLight(&kankyo->baseLight, &l_mEnv_normal_kcolor_data[weather][i],
@@ -1381,7 +1381,7 @@ void mEnv_DecideWeather_FirstGameStart() {
 
     saveWeather = ENV_SAVE_SET_WEATHER(intensity, weather);
 
-    common_data.save.saveWeather = saveWeather;
+    common_data.save.flash.saveWeather = saveWeather;
 
     if (mTM_check_renew_time(mTM_RENEW_TIME_WEATHER)) {
         mTM_off_renew_time(mTM_RENEW_TIME_WEATHER);
@@ -1400,17 +1400,17 @@ void mEnv_DecideWeather_NormalGameStart() {
 
         weather = common_data.weather;
         intensity = common_data.weatherIntensity;
-        saveWeather = (common_data.save.saveWeather & 0xF0);
-        lastWeather = ENV_SAVE_GET_WEATHER_TYPE(common_data.save.saveWeather);
+        saveWeather = (common_data.save.flash.saveWeather & 0xF0);
+        lastWeather = ENV_SAVE_GET_WEATHER_TYPE(common_data.save.flash.saveWeather);
 
         if (weather == mEnv_WEATHER_CLEAR || weather == mEnv_WEATHER_SAKURA) {
             if (lastWeather == mEnv_WEATHER_SNOW || lastWeather == mEnv_WEATHER_RAIN) {
                 mAGrw_OrderSetHaniwa();
             }
         }
-        common_data.save.saveWeather = ENV_SAVE_SET_WEATHER(intensity, weather);
+        common_data.save.flash.saveWeather = ENV_SAVE_SET_WEATHER(intensity, weather);
     } else {
-        saveWeather = common_data.save.saveWeather;
+        saveWeather = common_data.save.flash.saveWeather;
         weather = ENV_SAVE_GET_WEATHER_TYPE(saveWeather);
         intensity = ENV_SAVE_GET_WEATHER_INTENSITY(saveWeather);
 
@@ -1418,7 +1418,7 @@ void mEnv_DecideWeather_NormalGameStart() {
             weather = mEnv_WEATHER_CLEAR;
             intensity = mEnv_WEATHER_INTENSITY_NONE;
 
-            common_data.save.saveWeather = ENV_SAVE_SET_WEATHER(intensity, weather);
+            common_data.save.flash.saveWeather = ENV_SAVE_SET_WEATHER(intensity, weather);
         }
 
         common_data.weather = weather;
@@ -1486,7 +1486,7 @@ void mEnv_TaimatuPointLightWaveMoveProc(Game_Play* play) {
 
 void mEnv_CheckNpcLight_ToSwitchON(Game_Play* play) {
     UNUSED s32 pad;
-    if (common_data.save.sceneNo == SCENE_NPC_HOUSE && l_mEnv_index_light_switch_electric_light != 0 &&
+    if (common_data.save.flash.sceneNo == SCENE_NPC_HOUSE && l_mEnv_index_light_switch_electric_light != 0 &&
         mEnv_CheckNpcRoomPointLightNiceStatus()) {
         l_mEnv_point_light_on_electric_light = TRUE;
         l_mEnv_index_light_switch_electric_light = FALSE;
@@ -1604,7 +1604,7 @@ s32 mEnv_HereIsPlayerSelect() {
     s32 i;
 
     for (i = 0; i < 4; i++) {
-        if (common_data.save.sceneNo == place_chk[i]) {
+        if (common_data.save.flash.sceneNo == place_chk[i]) {
             ret = TRUE;
             break;
         }
@@ -1621,8 +1621,8 @@ void mEnv_MakeWindowLightAlpha(s32 enabled) {
             l_mEnv_windowlight_alpha_electric_light = 0.0f;
         }
 
-        if (common_data.save.sceneNo == SCENE_MY_ROOM_S || common_data.save.sceneNo == SCENE_MY_ROOM_M ||
-            common_data.save.sceneNo == SCENE_MY_ROOM_L) {
+        if (common_data.save.flash.sceneNo == SCENE_MY_ROOM_S || common_data.save.flash.sceneNo == SCENE_MY_ROOM_M ||
+            common_data.save.flash.sceneNo == SCENE_MY_ROOM_L) {
             if (common_data.time.nowSec >= mTM_TIME_TO_SEC(5, 0, 0) &&
                 common_data.time.nowSec < mTM_TIME_TO_SEC(18, 0, 0)) {
                 target = 1.0f;
@@ -1633,7 +1633,7 @@ void mEnv_MakeWindowLightAlpha(s32 enabled) {
                     target = 1.0f;
                 }
             }
-        } else if (common_data.save.sceneNo == SCENE_NPC_HOUSE) {
+        } else if (common_data.save.flash.sceneNo == SCENE_NPC_HOUSE) {
             target = 0.0f;
             if (mEnv_GetCurrentLightSwitchStatus() == 0) {
                 target = 1.0f;
