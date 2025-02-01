@@ -27,7 +27,7 @@ void func_8008EFDC_jp(struct Save* save);
 s32 func_8008F1BC_jp(UNK_PTR arg0, UNK_TYPE arg1);
 void func_8008F210_jp(void);
 s32 func_8008F23C_jp(void);
-s32 func_8008F768_jp(UNK_PTR arg0, UNK_PTR arg1);
+s32 func_8008F768_jp(struct Save* arg0, struct Save* arg1);
 s32 func_8008F7C8_jp(void);
 s32 func_8008F8A0_jp(UNK_PTR arg0, s32 arg1);
 // void func_8008F938_jp();

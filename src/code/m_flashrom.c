@@ -16,7 +16,7 @@ extern s32 D_80106A9C_jp[6];
 
 typedef s32 (*D80106AB4Func)(UNK_PTR arg0, UNK_TYPE arg1, B8013A380Struct* arg2);
 extern D80106AB4Func D_80106AB4_jp[2];
-typedef s32 (*D80106ABCFunc)(UNK_PTR arg0, UNK_PTR arg1, B8013A380Struct* arg2);
+typedef s32 (*D80106ABCFunc)(Save* arg0, Save* arg1, B8013A380Struct* arg2);
 extern D80106ABCFunc D_80106ABC_jp[4];
 
 extern B8013A380Struct B_8013A380_jp;
@@ -213,11 +213,111 @@ s32 func_8008F23C_jp(void) {
     return D_80106A94_jp;
 }
 
-s32 func_8008F24C_jp(UNK_PTR arg0, UNK_PTR arg1, B8013A380Struct* arg2);
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/code/m_flashrom/func_8008F24C_jp.s")
+s32 func_8008F24C_jp(Save* arg0, Save* arg1, B8013A380Struct* arg2) {
+    s32 pad[2];
+    s32 ret = 0;
+    s32 retries;
+    s32 var_s2 = 0;
+    s32 sp30 = 0;
+    s32 sp2C = 0;
+
+    func_8008ECC8_jp(5);
+    func_8008F020_jp(arg2);
+    D_80106A94_jp = 1;
+    bzero(arg0, sizeof(Save));
+    common_data.unk_10A7C = 0;
+    if (sFRm_IsInit() == 0) {
+        func_8008F020_jp(arg2);
+        ret = 1;
+    }
+
+    if (ret == 0) {
+        retries = 0;
+        while (TRUE) {
+            func_8008F8A0_jp(arg0, 0);
+            if (func_8008EEE8_jp(arg0)) {
+                var_s2 = 1;
+            }
+
+            if ((func_8008EE7C_jp((void*)arg0, 0xF980) == 0) && func_8008EF0C_jp(arg0, arg0->landInfo.id)) {
+                D_80106A90_jp = 0;
+                func_8008F020_jp(arg2);
+                sp30 = 1;
+                arg2->unk_00 = 1;
+                arg2->unk_04 = 0;
+                arg2->unk_08 = 0;
+                D_80106A94_jp = 0;
+                func_8008ECF0_jp(5);
+                break;
+            }
+
+            if (retries >= 3) {
+                break;
+            }
+
+            retries++;
+        }
+    }
+
+    if (ret == 0) {
+        retries = 0;
+        while (TRUE) {
+            bzero(arg0, sizeof(Save));
+            func_8008F8A0_jp(arg0, 0x200);
+            if (func_8008EEE8_jp(arg0)) {
+                var_s2 = 1;
+            }
+
+            if ((func_8008EE7C_jp((void*)arg0, 0xF980) == 0) && func_8008EF0C_jp(arg0, arg0->landInfo.id)) {
+                func_8008F020_jp(arg2);
+                if (sp30 == 0) {
+                    D_80106A90_jp = 1;
+                    arg2->unk_00 = 1;
+                    arg2->unk_04 = 0x200;
+                    arg2->unk_08 = 1;
+                }
+                sp2C = 1;
+                break;
+            }
+
+            if (retries >= 3) {
+                break;
+            }
+
+            retries++;
+        }
+    }
+
+    if ((ret == 0) && (sp30 == 0) && (sp2C == 0)) {
+        ret = 1;
+        if (var_s2 != 0) {
+            common_data.unk_10A7C = 1;
+        }
+        func_8008F020_jp(arg2);
+        func_8008ECF0_jp(5);
+    } else if ((sp30 == 1) && (sp2C == 1)) {
+        func_8008F020_jp(arg2);
+        bzero(arg0, sizeof(Save));
+        func_8008F8A0_jp(arg0, 0);
+        bzero(arg1, sizeof(Save));
+        func_8008F8A0_jp(arg1, 0x200);
+        if (bcmp(arg0, arg1, 0xF980)) {
+            D_80106A90_jp = 1;
+            arg2->unk_00 = 1;
+            arg2->unk_04 = 0x200;
+            arg2->unk_08 = 1;
+        } else {
+            D_80106A90_jp = 0;
+            ret = 1;
+            func_8008ECF0_jp(5);
+            D_80106A94_jp = 0;
+        }
+    }
+    return ret;
+}
 
 #ifdef NON_MATCHING
-s32 func_8008F530_jp(UNK_PTR arg0, UNUSED UNK_PTR arg1, B8013A380Struct* arg2){
+s32 func_8008F530_jp(Save* arg0, UNUSED Save* arg1, B8013A380Struct* arg2) {
     s32 i;
     u32 temp_s3;
     s32 temp_v0;
@@ -254,14 +354,14 @@ s32 func_8008F530_jp(UNK_PTR arg0, UNUSED UNK_PTR arg1, B8013A380Struct* arg2){
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/code/m_flashrom/func_8008F530_jp.s")
 #endif
 
-s32 func_8008F5FC_jp(UNUSED UNK_PTR arg0, UNUSED UNK_PTR arg1, B8013A380Struct* arg2) {
+s32 func_8008F5FC_jp(UNUSED Save* arg0, UNUSED Save* arg1, B8013A380Struct* arg2) {
     arg2->unk_0C = arg2->unk_10;
     sFRm_WriteAsync(arg2->unk_0C, arg2->unk_04, 0x80);
     arg2->unk_00 = 3;
     return 0;
 }
 
-s32 func_8008F648_jp(UNK_PTR arg0, UNUSED UNK_PTR arg1, B8013A380Struct* arg2) {
+s32 func_8008F648_jp(Save* arg0, UNUSED Save* arg1, B8013A380Struct* arg2) {
     u32 pageNum;
     s32 ret = 0;
 
@@ -295,7 +395,7 @@ s32 func_8008F648_jp(UNK_PTR arg0, UNUSED UNK_PTR arg1, B8013A380Struct* arg2) {
     return ret;
 }
 
-s32 func_8008F768_jp(void* arg0, void* arg1) {
+s32 func_8008F768_jp(Save* arg0, Save* arg1) {
     s32 ret;
 
     if ((B_8013A380_jp.unk_00 >= 0) && (B_8013A380_jp.unk_00 < ARRAY_COUNT(D_80106ABC_jp))) {

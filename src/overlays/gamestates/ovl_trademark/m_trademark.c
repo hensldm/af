@@ -46,8 +46,8 @@ DoorData* l_demo_door_data_table[] = {
     &demo_1_door_data, &demo_2_door_data, &demo_3_door_data, &demo_4_door_data, &demo_5_door_data,
 };
 
-u8 B_80808560_jp[0x10000];
-u8 B_80818560_jp[0x10000];
+Save B_80808560_jp;
+Save B_80818560_jp;
 u8 B_80828560_jp[0xC0];
 OSMesgQueue B_80828620_jp[6];
 u8 B_808286B0_jp[0x20];
