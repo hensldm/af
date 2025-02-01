@@ -215,7 +215,7 @@ s32 func_8008F23C_jp(void) {
 }
 
 s32 func_8008F24C_jp(Save* arg0, Save* arg1, B8013A380Struct* arg2) {
-    s32 pad[2];
+    UNUSED s32 pad[2];
     s32 ret = 0;
     s32 retries;
     s32 var_s2 = 0;
@@ -442,7 +442,34 @@ s32 func_8008F7C8_jp(void) {
     return ret;
 }
 
+#ifdef NON_MATCHING
+s32 func_8008F8A0_jp(Save* arg0, s32 arg1) {
+    UNUSED s32 pad;
+    u8* iter;
+    u32 end;
+    s32 ret = 1;
+
+    if (sFRm_IsInit() == 1) {
+        iter = (u8*)arg0;
+        end = arg1 + 0x1F3;
+        if (arg1 < end) {
+            do {
+                if (sFRm_ReadPage(iter, arg1) == -1) {
+                    ret = 0;
+                    break;
+                }
+                iter += 0x80;
+                arg1++;
+            } while(arg1 != end);
+        }
+    } else {
+        ret = 0;
+    }
+    return ret;
+}
+#else
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/code/m_flashrom/func_8008F8A0_jp.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/code/m_flashrom/func_8008F938_jp.s")
 
