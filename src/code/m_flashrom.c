@@ -216,10 +216,45 @@ s32 func_8008F23C_jp(void) {
 s32 func_8008F24C_jp(UNK_PTR arg0, UNK_PTR arg1, B8013A380Struct* arg2);
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/code/m_flashrom/func_8008F24C_jp.s")
 
-s32 func_8008F530_jp(UNK_PTR arg0, UNK_PTR arg1, B8013A380Struct* arg2);
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/code/m_flashrom/func_8008F530_jp.s")
+#ifdef NON_MATCHING
+s32 func_8008F530_jp(UNK_PTR arg0, UNUSED UNK_PTR arg1, B8013A380Struct* arg2){
+    s32 i;
+    u32 temp_s3;
+    s32 temp_v0;
+    s32 ret = 0;
 
-s32 func_8008F5FC_jp(UNK_PTR arg0, UNK_PTR arg1, B8013A380Struct* arg2) {
+    i = 0;
+    temp_s3 = arg2->unk_04;
+    for (; i < 3; i++) {
+        temp_v0 = func_8008F8A0_jp(arg0, temp_s3);
+        if (temp_v0 != 0) {
+            break;
+        }
+    }
+
+    if (temp_v0 == 1) {
+        arg2->unk_00 = 2;
+        arg2->unk_0C = arg0;
+        arg2->unk_10 = arg2->unk_0C;
+        arg2->unk_14 = 0;
+        if (arg2->unk_08 == 0) {
+            arg2->unk_04 = 0x200;
+            arg2->unk_08 = 1;
+        } else {
+            arg2->unk_04 = 0;
+            arg2->unk_08 = 0;
+        }
+    } else {
+        func_8008F020_jp(arg2);
+        ret = 1;
+    }
+    return ret;
+}
+#else
+#pragma GLOBAL_ASM("asm/jp/nonmatchings/code/m_flashrom/func_8008F530_jp.s")
+#endif
+
+s32 func_8008F5FC_jp(UNUSED UNK_PTR arg0, UNUSED UNK_PTR arg1, B8013A380Struct* arg2) {
     arg2->unk_0C = arg2->unk_10;
     sFRm_WriteAsync(arg2->unk_0C, arg2->unk_04, 0x80);
     arg2->unk_00 = 3;

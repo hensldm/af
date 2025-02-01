@@ -10,7 +10,7 @@ struct Save;
 typedef struct B8013A380Struct {
     /* 0x00 */ s32 unk_00;
     /* 0x04 */ u32 unk_04;
-    /* 0x08 */ u32 unk_08;
+    /* 0x08 */ s32 unk_08;
     /* 0x0C */ void* unk_0C;
     /* 0x10 */ void* unk_10;
     /* 0x14 */ s32 unk_14;
@@ -29,7 +29,7 @@ void func_8008F210_jp(void);
 s32 func_8008F23C_jp(void);
 s32 func_8008F768_jp(UNK_PTR arg0, UNK_PTR arg1);
 s32 func_8008F7C8_jp(void);
-// void func_8008F8A0_jp();
+s32 func_8008F8A0_jp(UNK_PTR arg0, s32 arg1);
 // void func_8008F938_jp();
 // void func_8008F968_jp();
 // void func_8008FA28_jp();
